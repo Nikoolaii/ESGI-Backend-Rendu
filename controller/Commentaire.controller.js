@@ -51,3 +51,14 @@ exports.deleteComment = async (req, res) => {
   }
 };
 
+
+exports.getCommentsByPost = async (req, res) => {
+    try {
+      const { postId } = req.params;
+      const comments = await Comment.find({ postId });
+      return res.status(201).json({ comments });
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ error: "Erreur la récupération des commentaires du post" });
+    }
+  };
