@@ -13,7 +13,7 @@ const database = async () => {
 database();
 
 const authRoute = require("./routes/auth.route.js");
-// const postRoute = require("./routes/post.route.js");
+const postRoute = require("./routes/post.route.js");
 const commentRoutes = require("./routes/Commentaire.route");
 
 
