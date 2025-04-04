@@ -1,5 +1,7 @@
 const User = require("../model/user.model.js");
 const Post = require("../model/post.model.js");
+const Comment = require("../model/Commentaire.js");
+
 require("dotenv").config();
 
 exports.createPost = async (req, res) => {
@@ -65,6 +67,8 @@ exports.deletePost = async (req, res) => {
         if (post.userId.toString() !== req.token._id) {
             return res.status(403).json({ error: "Ce n'est pas votre post." });
         }
+
+        await Comment.deleteMany({ postId: id });
 
         await post.deleteOne();
 
