@@ -7,7 +7,7 @@ module.exports = (role) => {
 
     if (!token) {
       res.status(401).json({
-        'message': 'You must be logged in to do this action.'
+        'message': 'Vous devez être identifíé pour effectuer cette action.'
       });
       return;
     }
@@ -17,7 +17,7 @@ module.exports = (role) => {
       next();
     } catch (e) {
       res.status(401).json({
-        'message': 'Your credentials are not valid.'
+        'message': 'Vos informations sont invalides.'
       });
     }
 
