@@ -14,6 +14,8 @@ const database = async () => {
 
 database();
 
+const authRoute = require("./routes/auth.route");
+
 //common headers
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -22,5 +24,6 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/auth', authRoute);
 
 module.exports = app;
