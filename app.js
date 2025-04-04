@@ -12,6 +12,9 @@ const database = async () => {
 
 database();
 
+const authRoute = require("./routes/auth.route.js");
+const postRoute = require("./routes/post.route.js");
+
 //common headers
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -24,5 +27,6 @@ app.use('/auth', authRoute);
 app.use('/post', postRoute);
 
 app.use('/auth', authRoute);
+app.use('/post', postRoute);
 
 module.exports = app;
