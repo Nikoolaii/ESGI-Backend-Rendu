@@ -1,8 +1,6 @@
 const express = require("express");
 const app = express();
 
-const authMiddleware = require('./middleware/auth.middleware');
-
 const { connect } = require('./database/connection.js');
 
 //always return json objects
@@ -14,7 +12,8 @@ const database = async () => {
 
 database();
 
-const authRoute = require("./routes/auth.route");
+const authRoute = require("./routes/auth.route.js");
+const postRoute = require("./routes/post.route.js");
 
 //common headers
 app.use((req, res, next) => {
@@ -25,5 +24,9 @@ app.use((req, res, next) => {
 });
 
 app.use('/auth', authRoute);
+app.use('/post', postRoute);
+
+app.use('/auth', authRoute);
+app.use('/post', postRoute);
 
 module.exports = app;
