@@ -26,14 +26,77 @@ exports.createPost = async (req, res) => {
     
         res.status(201).json(post);
     } catch (error) {
-        console.log(error);
+        return res.status(500).json({ error: "Une erreur est survenue." });
     }
 }
 
 exports.editPost = async (req, res) => {
-    res.status(200).json({ 'success': 'ok' });
-}
+    try {
+        const { id } = req.params;
+        const { text } = req.body;
 
+        let post = await Post.findOne({ _id: id });
+        if (!post) return res.status(404).json({ error: "Le post n'existe pas" });
+
+        if (post.userId.toString() !== req.token._id) {
+            return res.status(403).json({ error: "Ce n'est pas votre post." });
+        }
+
+        if (text) post.text = text;
+
+        if (req.file) post.imageUrl = req.file.filename;
+
+        await post.save();
+
+        return res.status(201).json(post);
+    } catch (error) {
+        return res.status(500).json({ error: "Une erreur est survenue." });
+    }
+};
+
+// Lorena
 exports.deletePost = async (req, res) => {
-    res.status(200).json({ 'success': 'ok' });
-}
+    try {
+        const { id } = req.params;
+
+        let post = await Post.findOne({ _id: id });
+        if (!post) return res.status(404).json({ error: "Le post n'existe pas" });
+
+        if (post.userId.toString() !== req.token._id) {
+            return res.status(403).json({ error: "Ce n'est pas votre post." });
+        }
+
+        await post.deleteOne();
+
+        return res.status(200).json({ success: "Post supprimé." });
+    } catch (error) {
+        return res.status(500).json({ error: "Une erreur est survenue." });
+    }
+};
+
+// Lorena
+exports.getPosts = async (req,res) => {
+    try {
+        const page = req.query.page || 1;
+        const limit = req.query.limit || 0;
+
+        const total = await Post.countDocuments();
+
+        let posts;
+        if (limit > 0) {
+            const skip = (page - 1) * limit;
+            posts = await Post.find().skip(skip).limit(limit);
+        } else {
+            posts = await Post.find();
+        }
+
+        res.status(200).json({
+            total,
+            page,
+            limit: limit || total,
+            posts
+        });
+    } catch (error) {
+        return res.status(500).json({ error: "Une erreur est survenue." });
+    }
+};
