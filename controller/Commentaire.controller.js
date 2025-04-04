@@ -30,10 +30,10 @@ exports.updateComment = async (req, res) => {
         comment.text = text;
       await comment.save();
   
-      return res.status(200).json({ message: "Commentaire modifié avec succès", comment });
+      return res.status(201).json({ message: "Commentaire modifié avec succès", comment });
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ error: "Erreur lors de la modification du commentaire" });
+      return res.status(400).json({ error: "Erreur lors de la modification du commentaire" });
     }
   };
 
