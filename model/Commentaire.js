@@ -5,12 +5,12 @@ const { Schema } = require("mongoose");
 const commentaireSchema = new Schema({
 
   user: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: false,
   },
   postId: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "post",
     required: true,
   },
