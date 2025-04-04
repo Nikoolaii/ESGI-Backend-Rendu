@@ -19,7 +19,7 @@ exports.signin = async (req, res) => {
       token: jwt.sign({
         _id: user._id,
         email: user.email,
-      }, process.env.JWT_KEY || "defaultSecretKey", { expiresIn: '24H' })
+      }, process.env.JWT_KEY, { expiresIn: '24H' })
     });
   } catch (error) {
     return res.status(400).json({
@@ -46,7 +46,7 @@ exports.login = async (req, res) => {
       token: jwt.sign({
         _id: user._id,
         email: user.email,
-      }, process.env.JWT_KEY || "defaultSecretKey", { expiresIn: '24H' })
+      }, process.env.JWT_KEY, { expiresIn: '24H' })
     });
   } catch (error) {
     return res.status(400).json({
