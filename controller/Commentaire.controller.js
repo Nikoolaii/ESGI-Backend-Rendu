@@ -19,3 +19,21 @@ exports.addComment = async (req, res) => {
   }
 };
 
+exports.updateComment = async (req, res) => {
+    try {
+      const { commentId } = req.params;
+      const { text } = req.body;
+        const comment = await Comment.findById(commentId);
+      if (!comment) {
+        return res.status(404).json({ error: "Commentaire non trouvé" });
+      }
+        comment.text = text;
+      await comment.save();
+  
+      return res.status(200).json({ message: "Commentaire modifié avec succès", comment });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Erreur lors de la modification du commentaire" });
+    }
+  };
+
